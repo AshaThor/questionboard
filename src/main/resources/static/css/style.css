@@ -14,9 +14,24 @@ main{
 body {
     background-color: white;
 }
-.board-main{
+.board-main {
     background-color: #72376a;
 }
+.card-grid{
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+}
+.grid-item-left {
+
+    border: 1px solid rgba(0, 0, 0, 0.8);
+     text-align: left;
+ }
+.grid-item-right {
+
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    text-align: right;
+}
+
 /*.container .card-deck {
     display: flex;
 }*/
