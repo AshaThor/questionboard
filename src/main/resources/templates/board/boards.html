@@ -1,21 +1,26 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>RpgClasses</title>
+    <title>Boards</title>
 </head>
 <body class="PHB">
 <div th:replace="header ::header"></div>
 <main class="flex-fill py-5 " role="main" >
+    <h1 sec:authorize="hasRole('ADMIN')">Welcome Admin</h1>
+    <h1 sec:authorize="hasRole('USER')">Welcome User</h1>
+    <div class="py-1 flex-fill board-main"></div>
+    <div class="py-1 flex-fill"></div>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-1 g-4">
+            <div class="d-inline-flex  p-2 bd-highlight"  sec:authorize="hasRole('ADMIN')" >Create new board</div>
             <div class="col" th:each="boardList : ${boardList}">
                 <div class="card text-white bg-dark mb-3 h-100"  >
-                    <!--<img class="card-img-top mx-auto d-block"
-                         th:attr="src=@{|/images/classsymbols/Dnd5E_ClassSymb_${rpgclass.getName()}.jpg|},alt=${rpgclass.getName()}"/>-->
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${boardList.getTitle()}"></h5>
-                        <!--<p class="card-text" th:text="${boardList.getUserId()}"></p>-->
-                        <a th:href="@{|/board/${boardList.getId()}|} " class="btn btn-primary" th:text="@{|Go to ${boardList.getId()}|}"></a>
+                    <div class="card-body card-grid">
+                        <h5 class="grid-item-left"><a class="card-title link-light " th:href="@{|/board/${boardList.getId()}|}" th:text="${boardList.getTitle()}"></a></h5>
+                            <div class="grid-item-right"></div>
+                        <div class="grid-item-right" sec:authorize="hasRole('ADMIN')"> <a action="#" method="post" th:action="@{/board/delete}" th:object="${boardList.getId()}">Delete</a> </div>
+
                     </div>
                 </div>
             </div>
