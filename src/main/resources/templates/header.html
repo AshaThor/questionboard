@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" th:src="@{/images/logo.png}" type="image/png" sizes="16x16">
+    <title>SDLC</title>
+</head>
+<body>
+<header>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img alt="Q&A Logo" height="30" th:src="@{/images/logo.png}">
+            </a>
+            <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-target="#navbarNavDropdown" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav" me-auto mb-2 mb-lg-0>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Lecturers</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Calendar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Notices</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Discussion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/board">Q&A</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Data Files</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Quizzes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Feedback</a>
+                    </li>
+                    <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/boards" id="navbardrop">
+                            Admin
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/board/admin">/board/admin</a>
+                            <a class="dropdown-item" href="/board/new">/board/new</a>
+                        </div>
+
+                    </li>
+                    <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/user" id="userdrop">
+                            User
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/logout">logout</a>
+                        </div>
+                    </li>
+                    <button type="button" class="btn btn-light" sec:authorize="isAnonymous()">Login</button>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+</html>
