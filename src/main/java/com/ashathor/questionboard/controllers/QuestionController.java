@@ -11,20 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/board")
-public class BoardController {
+@RequestMapping("/question")
+public class QuestionController {
 
     private BoardRepository boardRepository;
 
     private QuestionRepository questionRepository;
 
-    public BoardController(BoardRepository boardRepository, QuestionRepository questionRepository) {
+    public QuestionController(BoardRepository boardRepository, QuestionRepository questionRepository) {
         this.boardRepository = boardRepository;
         this.questionRepository = questionRepository;
     }
@@ -40,11 +37,11 @@ public class BoardController {
 
     @GetMapping("/{id}")
     public String getById(@PathVariable("id") long id, ModelMap modelMap) {
-        Board board = boardRepository.getOne(id);
-        List<Question> questionList = questionRepository.findAllByBoardId((int)id);
+        Question question = questionRepository.findById(id);
+        Board board = boardRepository.getOne((long)question.getBoardId());
+        modelMap.put("question", question);
         modelMap.put("board", board);
-        modelMap.put("questionList", questionList);
-        return "board/board";
+        return "question/question";
     }
 
     //try to get param name working
@@ -54,13 +51,13 @@ public class BoardController {
 
     @GetMapping("/new")
     public String boardForm(Model model) {
-        model.addAttribute("board", new Board());
-        return "board/newboard";
+        model.addAttribute("question", new Question());
+        return "question/newquestion";
     }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.OK)
-    public String create(@ModelAttribute Board board, Model model) {
+    public String create(@RequestParam Long id,@ModelAttribute Board board, Model model) {
         model.addAttribute("board", board);
         boardRepository.save(board);
         return "board/newsuccess";
@@ -73,20 +70,10 @@ public class BoardController {
         return "redirect:/board";
     }
 
-    @GetMapping("/update/{id}")
-    public String update(@PathVariable("id") int id, Model model) {
-        Board board = boardRepository.findById(id);
-        model.addAttribute("board", board);
-        return "board/updateBoard";
-    }
-
-    @PostMapping("/update/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public String doUpdate(@PathVariable("id") long id, @ModelAttribute Board updatedBoard, Model model) {
-        Board oldBoard = boardRepository.findById(id);
-        oldBoard.setTitle(updatedBoard.getTitle());
-        boardRepository.save(oldBoard);
-        model.addAttribute("board", oldBoard);
-        return "board/";
+    @GetMapping("/admin")
+    public String rpgClassAdmin(ModelMap modelMap) {
+        List<Board> boardList = boardRepository.findAll();
+        modelMap.put("boardList", boardList);
+        return "board/admin";
     }
 }

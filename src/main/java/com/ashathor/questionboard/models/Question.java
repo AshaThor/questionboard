@@ -3,6 +3,7 @@ package com.ashathor.questionboard.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,12 +31,19 @@ public class Question {
     @Column(name="create_date")
     private LocalDateTime createDate;
     @Column(name="update_date")
+    @Nullable
     private LocalDateTime dateUpdated;
+    @Nullable
+    @Column(nullable = true)
     private String answer;
+    @Nullable
     @Column(name="answer_user_id")
-    private int answerUserId;
+    //Interger not int to avoid null primitive type issues
+    private Integer answerUserId;
+    @Nullable
     @Column(name="answer_create_date")
     private LocalDateTime answerCreateDate;
+    @Nullable
     @Column(name="answer_update_date")
     private LocalDateTime answerUpdateDate;
 

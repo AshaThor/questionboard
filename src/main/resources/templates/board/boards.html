@@ -4,35 +4,53 @@
 <head>
     <title>Boards</title>
 </head>
-<body class="PHB">
+<body class="">
 <div th:replace="header ::header"></div>
-<main class="flex-fill py-5 " role="main" >
+<main role="main" class="py-5 flex-fill text-black">
     <h1 sec:authorize="hasRole('ADMIN')">Welcome Admin</h1>
     <h1 sec:authorize="hasRole('USER')">Welcome User</h1>
     <div class="py-1 flex-fill board-main"></div>
     <div class="py-1 flex-fill"></div>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-1 g-4">
-            <div class="d-inline-flex  p-2 bd-highlight"  sec:authorize="hasRole('ADMIN')" >Create new board</div>
-            <div class="col" th:each="boardList : ${boardList}">
-                <div class="card text-white bg-dark mb-3 h-100"  >
+            <div class="new-item-grid">
+                <a class="d-inline-flex p-2 bd-highlight board-main text-white" sec:authorize="hasRole('ADMIN')"
+                   th:href="@{|/board/new|}">Create new board</a>
+            </div>
+            <div class="col" th:each="board : ${boardList}">
+                <div class="card text-white bg-dark mb-3 h-100">
                     <div class="card-body card-grid">
-                        <h5 class="grid-item-left"><a class="card-title link-light " th:href="@{|/board/${boardList.getId()}|}" th:text="${boardList.getTitle()}"></a></h5>
-                            <div class="grid-item-right"></div>
-                        <div class="grid-item-right" sec:authorize="hasRole('ADMIN')"> <a action="#" method="post" th:action="@{/board/delete}" th:object="${boardList.getId()}">Delete</a> </div>
+                        <!--<div class="grid-item-left">-->
+                        <h5 class="grid-item-left"><a class="card-title link-light "
+                                                      th:href="@{|/board/${board.id}|}"
+                                                      th:text="${board.title}"></a></h5>
+                        <div class="grid-item-left" sec:authorize="hasRole('ADMIN')"><a
+                                th:href="@{|/board/update/${board.id}|}"
+                                class="btn btn-warning ml-2 ">Update</a></div>
+                        <!--</div>-->
+                        <div class="grid-item-right"></div>
+                        <div class="grid-item-right" sec:authorize="hasRole('ADMIN')"><a
+                                th:href="@{/board/deleteBoard(id=${board.id})}"
+                                class="btn btn-danger ml-2 ">Delete</a></div>
+                        <!--<form th:action="@{|/board/delete/${boardList.getId()}|}"  method="post">
+                            <input type="hidden" th:field="${boardList}">Delete</input>
+                            <button type="submit" onClick="return confirm('sure?')"/>
+                        </form>-->
 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </main>
 </body>
 <meta content="width=device-width, initial-scale=1" name="viewport">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
 </html>

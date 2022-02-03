@@ -3,6 +3,7 @@ package com.ashathor.questionboard.controllers;
 
 import com.ashathor.questionboard.models.Board;
 import com.ashathor.questionboard.repositories.BoardRepository;
+import com.ashathor.questionboard.repositories.QuestionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -35,8 +36,13 @@ class BoardControllerShould {
     @Mock
     private BoardRepository boardRepository;
 
+    @Mock
+    private QuestionRepository questionRepository;
+
     @InjectMocks // auto inject helloRepository
-    private BoardController boardController = new BoardController(boardRepository);
+    private BoardController boardController = new BoardController(boardRepository, questionRepository);
+
+
 
     @BeforeEach
     void setMockOutput() {

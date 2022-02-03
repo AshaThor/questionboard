@@ -19,7 +19,15 @@ body {
 }
 .card-grid{
     display: grid;
-    grid-template-columns: 20% 60% 20%;
+    grid-template-columns: 15% auto auto 20%;
+}
+.new-item-grid{
+    display: grid;
+    grid-template-columns: 20% auto;
+}
+.question-ask-grid{
+    display: grid;
+    grid-template-columns: 20% auto 20%;
 }
 .grid-item-left {
 
