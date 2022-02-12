@@ -9,9 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import static org.assertj.core.util.Arrays.asList;
@@ -44,6 +47,7 @@ class BoardControllerShould {
 
 
 
+
     @BeforeEach
     void setMockOutput() {
         ModelMap modelMap = new ModelMap();
@@ -56,22 +60,29 @@ class BoardControllerShould {
     }
 
     @Test
-    void returnClassesListLink() {
+    // Tests list classes
+    void returnBoardsListLink() {
         ModelMap modelMap = new ModelMap();
         assertEquals("Board list did not return correct link", "board/boards", boardController.listClasses(modelMap));
     }
 
     @Test
-    void returnIndividualClassLink() {
+    // Tests get by id
+    void returnIndividualBoardLink() {
         ModelMap modelMap = new ModelMap();
         assertEquals("An individual board did not return correctly return link", "board/board", boardController.getById(1, modelMap));
     }
-
-    /*@Test
-    void returnAdminLink() {
-        ModelMap modelMap = new ModelMap();
-        assertEquals("Admin link was not returned correctly", "board/admin", boardController.boardAdmin(modelMap));
-    }*/
+    @Test
+        // Tests list classes
+    void returnNewBoardLink() {
+        Model model = new Model() {
+            @Override
+            public Model addAttribute(Object attributeValue) {
+                return null;
+            }
+        };
+        assertEquals("Board list did not return correct link", "board/boards", boardController.boardForm());
+    }
 
     @Test
     public void returnClassesGivesList() {
