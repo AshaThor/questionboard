@@ -13,7 +13,7 @@
     <div class="py-1 flex-fill board-main"></div>
     <div class="py-1 flex-fill"></div>
     <div class="container-md">
-        <form action="#" method="post" th:action="@{/question/new}" th:object="${question}">
+        <form action="#" method="post" th:action="@{|/question/new/${question.boardId}|}" th:object="${question}">
             <div class="form-group">
                 <label for="inputName">Title</label>
                 <input aria-describedby="inputHelp" class="form-control" id="inputName"
@@ -23,18 +23,21 @@
                 <label for="inputName">Description</label>
                 <div class="input-group">
                     <textarea class="form-control" aria-label="With textarea"
-                              placeholder="Enter question description"></textarea>
+                              placeholder="Enter question description" th:field="*{description}"></textarea>
                 </div>
                 <div for="description"></div>
                 <div class="py-1 flex-fill"></div>
                 <div class="question-ask-grid">
                     <div sec:authorize="hasRole('USER')"></div>
-                    <input sec:authorize="hasRole('ADMIN')" aria-describedby="inputHelp" class="form-control" id="behalfOf"
-                           placeholder="Question on behalf of"
-                           type="text">
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <select th:field="*{userId}">
+                            <option th:value="2" th:text="User"></option>
+                        </select>
+                    </div>
                     <div></div>
+                    <button class="btn btn-primary" type="submit">Submit</button>
                     <a class="grid-item-right d-inline-flex p-2 bd-highlight board-main text-white"
-                       th:href="@{|/question/new|}">Ask new question</a>
+                       type="submit">Ask new question</a>
                 </div>
             </div>
         </form>

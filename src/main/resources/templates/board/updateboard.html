@@ -8,7 +8,7 @@
 <div th:replace="header ::header"></div>
 <main class="py-5 flex-fill" role="main">
     <div class="container-md">
-        <form action="#" method="post" th:action="@{/board/update/${board.getId()}}" th:object="${updatedBoard}">
+        <form action="#" method="post" th:action="@{|/board/update/${board.id}|}" th:object="${board}">
             <div class="form-group">
                 <label for="inputName">New title</label>
                 <input aria-describedby="inputHelp" class="form-control" id="inputName" placeholder="Enter board title"

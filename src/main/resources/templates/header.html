@@ -48,17 +48,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Feedback</a>
                     </li>
-                    <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
 
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/boards" id="navbardrop">
-                            Admin
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/board/admin">/board/admin</a>
-                            <a class="dropdown-item" href="/board/new">/board/new</a>
-                        </div>
-
-                    </li>
                     <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/user" id="userdrop">
                             User

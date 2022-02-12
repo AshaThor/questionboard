@@ -11,10 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/board")
@@ -74,19 +71,19 @@ public class BoardController {
     }
 
     @GetMapping("/update/{id}")
-    public String update(@PathVariable("id") int id, Model model) {
-        Board board = boardRepository.findById(id);
+    public String update(@PathVariable("id") Long id, Model model) {
+        Board board = boardRepository.getOne(id);
         model.addAttribute("board", board);
         return "board/updateBoard";
     }
 
     @PostMapping("/update/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public String doUpdate(@PathVariable("id") long id, @ModelAttribute Board updatedBoard, Model model) {
-        Board oldBoard = boardRepository.findById(id);
+    @Transactional
+    public String doUpdate(@PathVariable("id") Long id, @ModelAttribute Board updatedBoard, Model model) {
+        Board oldBoard = boardRepository.findById(id).orElse(null);
         oldBoard.setTitle(updatedBoard.getTitle());
         boardRepository.save(oldBoard);
-        model.addAttribute("board", oldBoard);
-        return "board/";
+        //model.addAttribute("board", oldBoard);
+        return "redirect:/board";
     }
 }

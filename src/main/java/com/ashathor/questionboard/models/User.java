@@ -22,5 +22,5 @@ public class User {
     private Long id;
     private String username;
     //@Column(name="user_id")
-    private int userId;
+    private int type;
 }

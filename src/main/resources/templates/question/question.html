@@ -13,8 +13,58 @@
     <div class="py-1 flex-fill"></div>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-1">
+            <div class="votebox">
+                <div onclick="location.href='YOUR-URL-HERE';" style="cursor: pointer;" class="up vote"></div>
+                <div onclick="location.href='YOUR-URL-HERE';" style="cursor: pointer;" class="down vote"></div>
+            </div>
+            <h5 th:text="'Question By: ' + ${user.username}"></h5>
+            <p th:text="'Date Created: ' + ${question.createDate}"></p>
+            <h5>Title</h5>
             <p class="d-inline-flex p-1 bd-highlight board-main text-white" th:text="${question.getTitle()}"></p>
+            <h5>Description</h5>
             <p class="d-inline-flex p-1 bd-highlight board-main text-white" th:text="${question.getDescription()}"></p>
+
+            <h5 th:if="${question.getAnswer() == null}">This is no answer at this time</h5>
+            <div th:if="${question.getAnswer() != null}">
+                <h5>Answer</h5>
+                <p th:text="'Answered: ' + ${question.answerCreateDate}"></p>
+                <p></p>
+                <p class="d-inline-flex p-1 bd-highlight board-main text-white" th:text="${question.getAnswer()}"></p>
+            </div>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Answer Question
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form action="#" method="post" th:action="@{|/question/update/${question.id}|}"
+                              th:object="${question}">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Answer this question</h5>
+
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                              th:field="*{answer}"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     </div>

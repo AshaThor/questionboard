@@ -26,13 +26,15 @@ public class Question {
     private int boardId;
     private String title;
     @Column(name="user_id")
-    private int userId;
+    private Long userId;
     private String description;
     @Column(name="create_date")
     private LocalDateTime createDate;
     @Column(name="update_date")
     @Nullable
     private LocalDateTime dateUpdated;
+    @Nullable
+    private Integer vote;
     @Nullable
     @Column(nullable = true)
     private String answer;

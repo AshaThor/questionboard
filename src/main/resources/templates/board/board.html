@@ -15,18 +15,26 @@
         <div class="row row-cols-1 row-cols-md-1 g-4">
             <div class="new-item-grid">
                 <a class="d-inline-flex p-2 bd-highlight board-main text-white"
-                   th:href="@{|/question/new|}">Ask new question</a>
+                   th:href="@{|/question/new/${board.id}|}">Ask new question</a>
             </div>
             <div class="col" th:each="question : ${questionList}">
                 <div class="card text-white bg-dark mb-3 h-100">
-                    <div class="card-body card-grid">
-                        <h5 class="grid-item-left"><a class="card-title link-light " th:href="@{|/question/${question.id}|}"
+                    <div class="card-body card-grid-q">
+                        <div class="votebox">
+                            <a th:href="@{|/question/upvote/${question.id}|}" style="cursor: pointer;" class="up vote"></a>
+                            <a th:href="@{|/question/downvote/${question.id}|}" style="cursor: pointer;" class="down vote"></a>
+                        </div>
+                        <p th:text="${question.vote}"></p>
+                        <h5 class="grid-item-left"><a class="card-title link-light "
+                                                      th:href="@{|/question/${question.id}|}"
                                                       th:text="${question.title}"></a>
                         </h5>
-                        <div class="grid-item-left" sec:authorize="hasRole('ADMIN')"><a class="btn btn-danger ml-2 ">Update</a>
+                        <div class="grid-item-left" sec:authorize="hasRole('ADMIN')"><a
+                                th:href="@{|/question/update/${question.id}|}" class="btn btn-warning ml-2 ">Update</a>
                         </div>
                         <div class="grid-item-right"></div>
-                        <div class="grid-item-right" sec:authorize="hasRole('ADMIN')"><a class="btn btn-danger ml-2 ">Delete</a>
+                        <div class="grid-item-right" sec:authorize="hasRole('ADMIN')"><a
+                                th:href="@{/question/delete(id=${question.id},boardId=${board.id})}" class="btn btn-danger ml-2 ">Delete</a>
                         </div>
 
                     </div>
