@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+//URL decorator, the controller will auto route any URL/board requests here.
 @RequestMapping("/board")
 public class BoardController {
 
@@ -21,12 +22,15 @@ public class BoardController {
 
     private QuestionRepository questionRepository;
 
+    //Auto injectiing the data handing into the constructor so that the constructor has visibility of the database calls
+    //it requires to perform tasks in the CRUD methods.
     public BoardController(BoardRepository boardRepository, QuestionRepository questionRepository) {
         this.boardRepository = boardRepository;
         this.questionRepository = questionRepository;
     }
 
     //Root
+    //Returns a full list of all the boards in the application
     @GetMapping
     public String listClasses(ModelMap modelMap) {
         List<Board> boardList = boardRepository.findAll();
@@ -35,6 +39,7 @@ public class BoardController {
     }
 
 
+    //Returns a board given an id and returns the questions that are related to that board as a list of questions
     //When a user calls URL/board/{id} - {id} being a number variable the controller knows to send
     //that request here
     @GetMapping("/{id}")
@@ -54,17 +59,14 @@ public class BoardController {
         return "board/board";
     }
 
-    //try to get param name working
-    public Board getClass(@RequestParam(value = "name") String name) {
-        return boardRepository.findByTitle(name);
-    }
-
+    //Returns a form page to create a new board
     @GetMapping("/new")
     public String boardForm(Model model) {
         model.addAttribute("board", new Board());
         return "board/newboard";
     }
 
+    //Accepts a post request and then adds the given board object to the database
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.OK)
     public String create(@ModelAttribute Board board, Model model) {
@@ -73,6 +75,8 @@ public class BoardController {
         return "board/newsuccess";
     }
 
+    //Method takes an id of a baord that is being deleted, performs the delete and then returns a redirect call to update
+    //the users view with the changes
     @GetMapping("/deleteBoard")
     @Transactional
     public String delete(@RequestParam Long id) {
@@ -80,6 +84,7 @@ public class BoardController {
         return "redirect:/board";
     }
 
+    //Returns a form so that the user can update their given question fields based on the id provided.
     @GetMapping("/update/{id}")
     public String update(@PathVariable("id") Long id, Model model) {
         Board board = boardRepository.getOne(id);
@@ -87,6 +92,7 @@ public class BoardController {
         return "board/updateBoard";
     }
 
+    //Accepts a post request with an updated object of board to the push to the database and override the existing entry
     @PostMapping("/update/{id}")
     @Transactional
     public String doUpdate(@PathVariable("id") Long id, @ModelAttribute Board updatedBoard, Model model) {

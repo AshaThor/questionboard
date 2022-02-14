@@ -1,9 +1,10 @@
 # QuestionBoard
 SDLC Assessment application
 
-To use goto https://sdlcquestionboard.herokuapp.com/
+To use goto https://sdlcquestionboard.herokuapp.com/ - the first load will take time as the application will need to be
+woken up from sleep mode.
 
-To access the Q&A board you will need to login
+To access the Q&A board you will need to log in
 Credentials are as follows:
 
 user : userpassword
@@ -34,5 +35,5 @@ The following is the run configuratiuon required.
 alternativly use smart start form intelij - Click on the start icon on line 9 in image
 ![img_1.png](img_1.png)
 
-
+you should be good to run the application on localhost:8080/
 

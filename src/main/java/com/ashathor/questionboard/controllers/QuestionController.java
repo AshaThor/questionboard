@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
+//URL decorator, the controller will auto route any URL/question requests here.
 @RequestMapping("/question")
 public class QuestionController {
 
@@ -26,21 +27,16 @@ public class QuestionController {
     
     private UserRepository userRepository;
 
+    //Auto injectiing the data handing into the constructor so that the constructor has visibility of the database calls
+    //it requires to perform tasks in the CRUD methods.
     public QuestionController(BoardRepository boardRepository, QuestionRepository questionRepository, UserRepository userRepository) {
         this.boardRepository = boardRepository;
         this.questionRepository = questionRepository;
         this.userRepository = userRepository;
     }
 
-    //Root
-    @GetMapping
-    public String listClasses(ModelMap modelMap) {
-        List<Board> boardList = boardRepository.findAll();
-        modelMap.put("boardList", boardList);
-        return "board/boards";
-    }
-
-
+    //Returns a Question view based on the question requested in the url, contains the board question and user,
+    // all items required to build the view.
     @GetMapping("/{id}")
     public String getById(@PathVariable("id") long id, ModelMap modelMap) {
         Question question = questionRepository.findById(id);
@@ -52,22 +48,22 @@ public class QuestionController {
         return "question/question";
     }
 
-    //try to get param name working
-    public Board getClass(@RequestParam(value = "name") String name) {
-        return boardRepository.findByTitle(name);
-    }
-
+    //Returns a form to create a new question. The id required is that of the parent board in order to
+    // accommodate the two.
     @GetMapping("/new/{id}")
-    public String boardForm(@PathVariable("id") Integer boardId, Model model) {
+    public String questionForm(@PathVariable("id") Integer boardId, Model model) {
         Question question = new Question();
         question.setBoardId(boardId);
         model.addAttribute("question", question);
         return "question/newquestion";
     }
 
+    //Post request handler for a new question, this accepts the new question object as well as a path variable for the board id
     @PostMapping("/new/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String create(@PathVariable("id") Integer boardId, @ModelAttribute Question question, Model model) {
+        //due to some unforseen issues the id was being set in the ui and this is not inkeeping wioth how the application
+        //assigns id's therefore a reset here is required.
         question.setBoardId(boardId);
         question.setId(null);
         question.setVote(0);
@@ -77,6 +73,7 @@ public class QuestionController {
         return "question/newsuccess";
     }
 
+    //Deletes the requested question and redirects the user to the boards view
     @GetMapping("/delete")
     @Transactional
     public String delete(@RequestParam Long id, @RequestParam Long boardId) {
@@ -84,6 +81,7 @@ public class QuestionController {
         return "redirect:/board";
     }
 
+    //Returns a form for updating the question of id given in the request
     @GetMapping("/update/{id}")
     public String update(@PathVariable("id") Long id, Model model) {
         Question question = questionRepository.getOne(id);
@@ -92,6 +90,7 @@ public class QuestionController {
         return "question/updateQuestion";
     }
 
+    //Accepts a post request of the updated question of given question in the request path.
     @PostMapping("/update/{id}")
     @Transactional
     public String doUpdate(@PathVariable("id") Long id, @ModelAttribute Question updatedQuestion, Model model) {
@@ -99,9 +98,11 @@ public class QuestionController {
         oldQuestion.setAnswer(updatedQuestion.getAnswer());
         oldQuestion.setAnswerCreateDate(LocalDateTime.now());
         questionRepository.save(oldQuestion);
-        //model.addAttribute("board", oldBoard);
         return "redirect:/question/{id}";
     }
+
+    //This handles a vote request to add one to the vote number and redirects back to boards. This is not ideal howevr
+    //is a working solution
     @GetMapping("/upvote/{id}")
     @Transactional
     public String upvote(@PathVariable("id") Long id, Model model) {
