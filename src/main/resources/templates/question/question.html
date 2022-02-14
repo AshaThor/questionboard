@@ -13,10 +13,6 @@
     <div class="py-1 flex-fill"></div>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-1">
-            <div class="votebox">
-                <div onclick="location.href='YOUR-URL-HERE';" style="cursor: pointer;" class="up vote"></div>
-                <div onclick="location.href='YOUR-URL-HERE';" style="cursor: pointer;" class="down vote"></div>
-            </div>
             <h5 th:text="'Question By: ' + ${user.username}"></h5>
             <p th:text="'Date Created: ' + ${question.createDate}"></p>
             <h5>Title</h5>
@@ -33,7 +29,7 @@
             </div>
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button sec:authorize="hasRole('ADMIN')" th:if="${question.getAnswer() == null}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Answer Question
             </button>
 
@@ -53,7 +49,7 @@
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                              th:field="*{answer}"></textarea>
+                                              th:field="*{answer}" th:maxlength="200"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer">

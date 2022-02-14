@@ -6,6 +6,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/*
+ * This is a model class with alot of decorators, @Getter and @Setter auto generate getters and setters for all the
+ * variables given in the class. @entity tells Spring boot that this is an entity model.
+ * @Table is link to the database so that spring knows where the data map for this model is
+ *
+ * */
 @Getter
 @Setter
 @Entity
@@ -21,6 +27,5 @@ public class User {
     @Column(name="id", unique=true, nullable=false)
     private Long id;
     private String username;
-    //@Column(name="user_id")
     private int type;
 }

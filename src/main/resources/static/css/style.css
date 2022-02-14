@@ -34,13 +34,12 @@ body {
     grid-template-columns: 20% auto 20%;
 }
 .grid-item-left {
-
-    border: 1px solid rgba(0, 0, 0, 0.8);
+    /*border: 1px solid rgba(0, 0, 0, 0.8);*/
      text-align: left;
  }
 .grid-item-right {
 
-    border: 1px solid rgba(0, 0, 0, 0.8);
+    /*border: 1px solid rgba(0, 0, 0, 0.8);*/
     text-align: right;
 }
 

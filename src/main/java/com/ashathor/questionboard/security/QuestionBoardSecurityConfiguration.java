@@ -10,6 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
+/**
+ * This security file is hard coded passwords and user access capability. this is not recommended and would be changed in a
+ * production environment however due to security not being the focus of this application this is sufficient
+ * */
+
+
 @Configuration
 @EnableWebSecurity
 public class QuestionBoardSecurityConfiguration extends WebSecurityConfigurerAdapter {
