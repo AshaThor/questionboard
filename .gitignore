@@ -12,7 +12,6 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -35,3 +34,7 @@ build/
 .mvn/
 mvnw
 mvnw.cmd
+
+ENV_VARS.txt
+usefulLinks.md
+src/main/resources/application-dev.properties

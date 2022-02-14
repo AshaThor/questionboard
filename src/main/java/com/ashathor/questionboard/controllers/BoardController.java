@@ -35,12 +35,22 @@ public class BoardController {
     }
 
 
+    //When a user calls URL/board/{id} - {id} being a number variable the controller knows to send
+    //that request here
     @GetMapping("/{id}")
     public String getById(@PathVariable("id") long id, ModelMap modelMap) {
+        //Using the id given in the path we are able to look up the instance of the
+        // board that is being requested from the database
         Board board = boardRepository.getOne(id);
+        //Using the same information we can the find all the questions that are on the board
+        //by creating a predefines sql query in this case a Get * When boardId = x
         List<Question> questionList = questionRepository.findAllByBoardId((int)id);
+        //Now you are able to map the objects you have retrieved form the database and put
+        //them into objetcs that the template engine can understand
         modelMap.put("board", board);
         modelMap.put("questionList", questionList);
+        //The return statement is actually a path reference to the HTML template that this
+        //request is to build and return as a view item aka src/main/resources/templates/board/board.html
         return "board/board";
     }
 

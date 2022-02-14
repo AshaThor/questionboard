@@ -18,15 +18,16 @@
                 <label for="inputName">Title</label>
                 <input aria-describedby="inputHelp" class="form-control" id="inputName"
                        placeholder="Enter question title"
-                       th:field="*{title}" type="text">
+                       th:field="*{title}" th:maxlength="100" type="text">
                 <div for="name"></div>
                 <label for="inputName">Description</label>
                 <div class="input-group">
                     <textarea class="form-control" aria-label="With textarea"
-                              placeholder="Enter question description" th:field="*{description}"></textarea>
+                              placeholder="Enter question description" th:field="*{description}" th:maxlength="2000"></textarea>
                 </div>
                 <div for="description"></div>
                 <div class="py-1 flex-fill"></div>
+                <label sec:authorize="hasRole('ADMIN')" for="inputName">On behalf of:</label>
                 <div class="question-ask-grid">
                     <div sec:authorize="hasRole('USER')"></div>
                     <div sec:authorize="hasRole('ADMIN')">
@@ -36,8 +37,8 @@
                     </div>
                     <div></div>
                     <button class="btn btn-primary" type="submit">Submit</button>
-                    <a class="grid-item-right d-inline-flex p-2 bd-highlight board-main text-white"
-                       type="submit">Ask new question</a>
+                    <!--<a class="grid-item-right d-inline-flex p-2 bd-highlight board-main text-white"
+                       type="submit">Ask new question</a>-->
                 </div>
             </div>
         </form>

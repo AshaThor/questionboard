@@ -9,7 +9,7 @@ CREATE SCHEMA question_board
         description varchar,
         create_date TIMESTAMP,
         update_date TIMESTAMP,
-        votes int,
+        vote int,
         answer varchar,
         answer_user_id int,
         answer_create_date TIMESTAMP,

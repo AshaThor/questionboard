@@ -29,7 +29,7 @@
                                                       th:href="@{|/question/${question.id}|}"
                                                       th:text="${question.title}"></a>
                         </h5>
-                        <div class="grid-item-left" sec:authorize="hasRole('ADMIN')"><a
+                        <div class="grid-item-left"><a
                                 th:href="@{|/question/update/${question.id}|}" class="btn btn-warning ml-2 ">Update</a>
                         </div>
                         <div class="grid-item-right"></div>
